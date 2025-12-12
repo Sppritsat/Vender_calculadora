@@ -1,0 +1,352 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Crud_WebForms.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title><%: Page.Title %> - Financial Calculator Pro</title>
+    
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/neveria.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <!-- Estilos personalizados para tema Business -->
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --dark-gray: #1f2937;
+            --light-gray: #f3f4f6;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+
+        /* NAVBAR PROFESSIONAL */
+        .navbar-business {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .brand-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            padding: 0.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* NAVBAR TOGGLER */
+        .navbar-toggler {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 0.5rem 0.75rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3);
+        }
+
+        /* CONTENT AREA */
+        .body-content {
+            background-color: white;
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* FOOTER PROFESSIONAL */
+        .footer-business {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            padding: 3rem 0 1rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h5 {
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-gold);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            line-height: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        /* STATS BADGE */
+        .stats-badge {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #fbbf24 100%);
+            color: var(--dark-gray);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            .body-content {
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+            </Scripts>
+        </asp:ScriptManager>
+        
+        <!-- NAVBAR PROFESIONAL -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-business">
+            <div class="container">
+                <!-- LOGO Y MARCA -->
+                <a class="navbar-brand" runat="server" href="~/"> 
+                    <span class="brand-icon">💼</span>
+                    <span>Financial Calculator <span class="stats-badge">PRO</span></span>
+                </a>
+                
+                <!-- BOTÓN HAMBURGUESA MÓVIL -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
+                    title="Alternar navegación" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- MENÚ DE NAVEGACIÓN -->
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/">
+                🏠 Inicio
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/Caracteristicas">
+                ✨ Características
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/Administrador">
+                📋 Panel Admin
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" runat="server" href="~/Solicitar" 
+               style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: #1f2937 !important; font-weight: 700;">
+                🚀 Obtener Gratis
+            </a>
+        </li>
+    </ul>
+</div>
+        </nav>
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <!-- FOOTER PROFESIONAL -->
+        <footer class="footer-business">
+            <div class="container">
+                <div class="row">
+                    <!-- Columna 1: Sobre Nosotros -->
+                    <div class="col-md-4 footer-section">
+                        <h5>💼 Financial Calculator Pro</h5>
+                        <p style="color: rgba(255, 255, 255, 0.7);">
+                            Herramienta profesional para análisis financiero empresarial. 
+                            12 módulos integrados para proyecciones precisas a 5 años.
+                        </p>
+                        <div class="social-icons mt-3">
+                            <a href="#" title="LinkedIn">🔗</a>
+                            <a href="#" title="Twitter">🐦</a>
+                            <a href="#" title="YouTube">📺</a>
+                            <a href="#" title="Email">📧</a>
+                        </div>
+                    </div>
+
+                    <!-- Columna 2: Enlaces Rápidos -->
+                    <div class="col-md-4 footer-section">
+                        <h5>🔗 Enlaces Rápidos</h5>
+                        <ul>
+                            <li><a runat="server" href="~/">→ Inicio</a></li>
+                            <li><a runat="server" href="~/Caracteristicas">→ Características</a></li>
+                            <li><a runat="server" href="~/Solicitar">→ Solicitar Acceso</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna 3: Contacto -->
+                    <div class="col-md-4 footer-section">
+                        <h5>📞 Contacto</h5>
+                        <ul>
+                            <li>
+                                <span style="color: var(--accent-gold);">📧</span> 
+                                <a href="mailto:info@financialcalc.com">info@financialcalc.com</a>
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-gold);">💬</span> 
+                                <a href="https://wa.me/5214491234567">WhatsApp: +52 449 123 4567</a>
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-gold);">📍</span> 
+                                Aguascalientes, México
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-gold);">🕐</span> 
+                                Lun - Vie: 9:00 - 18:00
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <p class="mb-2">
+                        &copy; <%: DateTime.Now.Year %> Financial Calculator Pro. Todos los derechos reservados.
+                    </p>
+                    <p class="mb-0" style="font-size: 0.85rem;">
+                        Desarrollado con <span style="color: #ef4444;">❤️</span> para emprendedores y empresas | 
+                        <a href="#" style="color: var(--accent-gold);">Términos de Uso</a> | 
+                        <a href="#" style="color: var(--accent-gold);">Política de Privacidad</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </form>
+    
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>
